@@ -6,20 +6,23 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "S3Uploader", "S3Uploader\S3Uploader.csproj", "{0303E76E-577F-46A9-8772-88ED8343449B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B22943A5-060A-41AA-BCBE-39F98F0F4745}"
-	ProjectSection(SolutionItems) = preProject
-		AmazonUploader.cs = AmazonUploader.cs
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{0303E76E-577F-46A9-8772-88ED8343449B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0303E76E-577F-46A9-8772-88ED8343449B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0303E76E-577F-46A9-8772-88ED8343449B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0303E76E-577F-46A9-8772-88ED8343449B}.Debug|x86.Build.0 = Debug|Any CPU
 		{0303E76E-577F-46A9-8772-88ED8343449B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0303E76E-577F-46A9-8772-88ED8343449B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0303E76E-577F-46A9-8772-88ED8343449B}.Release|x86.ActiveCfg = Release|Any CPU
+		{0303E76E-577F-46A9-8772-88ED8343449B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

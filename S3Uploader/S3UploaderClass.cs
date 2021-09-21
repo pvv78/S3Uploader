@@ -45,7 +45,7 @@ namespace S3Uploader
                                string p_fileNameInS3)
         {
             string accessKey = p_accessKey;
-            string secretKey = p_secretKey; // "laksdjfhgqpwoeirutyzmxncbv";
+            string secretKey = p_secretKey;
             string localFilePath = p_filename;
             string bucketName = p_bucketName;
             string subDirectoryInBucket = p_subDirectoryInBucket;
@@ -58,78 +58,51 @@ namespace S3Uploader
                 ForcePathStyle = true
             };
 
-            IAmazonS3 client = new AmazonS3Client(accessKey, secretKey, S3ClientConfig);
-                //using (IAmazonS3 client = new AmazonS3Client(accessKey, secretKey))
-                //var client = Amazon.AWSClientFactory.CreateAmazonS3Client(accessKey, secretKey))
+            using (IAmazonS3 client = new AmazonS3Client(accessKey, secretKey, S3ClientConfig))
+                { 
+                        //using (IAmazonS3 client = new AmazonS3Client(accessKey, secretKey))
+                        //var client = Amazon.AWSClientFactory.CreateAmazonS3Client(accessKey, secretKey))
 
-                // FileStream(path)
+                        // FileStream(path)
 
-                //public bool sendMyFileToS3(string localFilePath, string bucketName, string subDirectoryInBucket, string fileNameInS3)
-                //{
-                // input explained :
-                // localFilePath = the full local file path e.g. "c:\mydir\mysubdir\myfilename.zip"
-                // bucketName : the name of the bucket in S3 ,the bucket should be alreadt created
-                // subDirectoryInBucket : if this string is not empty the file will be uploaded to
-                // a subdirectory with this name
-                // fileNameInS3 = the file name in the S3
+                        //public bool sendMyFileToS3(string localFilePath, string bucketName, string subDirectoryInBucket, string fileNameInS3)
+                        //{
+                        // input explained :
+                        // localFilePath = the full local file path e.g. "c:\mydir\mysubdir\myfilename.zip"
+                        // bucketName : the name of the bucket in S3 ,the bucket should be alreadt created
+                        // subDirectoryInBucket : if this string is not empty the file will be uploaded to
+                        // a subdirectory with this name
+                        // fileNameInS3 = the file name in the S3
 
-                // create an instance of IAmazonS3 class ,in my case i choose RegionEndpoint.EUWest1
-                // you can change that to APNortheast1 , APSoutheast1 , APSoutheast2 , CNNorth1
-                // SAEast1 , USEast1 , USGovCloudWest1 , USWest1 , USWest2 . this choice will not
-                // store your file in a different cloud storage but (i think) it differ in performance
-                // depending on your location
+                        // create an instance of IAmazonS3 class ,in my case i choose RegionEndpoint.EUWest1
+                        // you can change that to APNortheast1 , APSoutheast1 , APSoutheast2 , CNNorth1
+                        // SAEast1 , USEast1 , USGovCloudWest1 , USWest1 , USWest2 . this choice will not
+                        // store your file in a different cloud storage but (i think) it differ in performance
+                        // depending on your location
 
-                //IAmazonS3 client = Amazon.AWSClientFactory.CreateAmazonS3Client(RegionEndpoint.EUWest1);
-                //IAmazonS3 client = new AmazonS3Client(accessKey, secretKey);
-                // create a TransferUtility instance passing it the IAmazonS3 created in the first step
-                TransferUtility utility = new TransferUtility(client);
-                // making a TransferUtilityUploadRequest instance
-                TransferUtilityUploadRequest request = new TransferUtilityUploadRequest();
+                        //IAmazonS3 client = Amazon.AWSClientFactory.CreateAmazonS3Client(RegionEndpoint.EUWest1);
+                        //IAmazonS3 client = new AmazonS3Client(accessKey, secretKey);
+                    
+                    // create a TransferUtility instance passing it the IAmazonS3 created in the first step
+                    TransferUtility utility = new TransferUtility(client);
+                    
+                    // making a TransferUtilityUploadRequest instance
+                    TransferUtilityUploadRequest request = new TransferUtilityUploadRequest();
 
-                if (subDirectoryInBucket == "" || subDirectoryInBucket == null)
-                {
-                    request.BucketName = bucketName; //no subdirectory just bucket name
+                    if (subDirectoryInBucket == "" || subDirectoryInBucket == null)
+                    {
+                        request.BucketName = bucketName; //no subdirectory just bucket name
+                    }
+                    else
+                    {   // subdirectory and bucket name
+                        request.BucketName = bucketName + @"/" + subDirectoryInBucket;
+                    }
+                    request.Key = fileNameInS3; //file name up in S3
+                    request.FilePath = localFilePath; //local file name
+                    utility.Upload(request); //commensing the transfer
+
+                    return "Ok"; //indicate that the file was sent
                 }
-                else
-                {   // subdirectory and bucket name
-                    request.BucketName = bucketName + @"/" + subDirectoryInBucket;
-                }
-                request.Key = fileNameInS3; //file name up in S3
-                request.FilePath = localFilePath; //local file name
-                utility.Upload(request); //commensing the transfer
-
-                return "Ok"; //indicate that the file was sent
             }
-            /*{
-
-                return "Hello";
-            }*/
-        
-        //orig
-        //public class Class1
-        //{
-        /*
-        public bool sendMyFileToS3(System.IO.Stream localFilePath, string bucketName, string subDirectoryInBucket, string fileNameInS3)
-        {
-            IAmazonS3 client = new AmazonS3Client(RegionEndpoint.APSouth1);
-            TransferUtility utility = new TransferUtility(client);
-            TransferUtilityUploadRequest request = new TransferUtilityUploadRequest();
-
-            if (subDirectoryInBucket == "" || subDirectoryInBucket == null)
-            {
-                request.BucketName = bucketName; //no subdirectory just bucket name  
-            }
-            else
-            {   // subdirectory and bucket name  
-                request.BucketName = bucketName + @"/" + subDirectoryInBucket;
-            }
-            request.Key = fileNameInS3; //file name up in S3  
-            request.InputStream = localFilePath;
-            utility.Upload(request); //commensing the transfer  
-
-            return true; //indicate that the file was sent  
-        }
-        */
-        //}
     }
 }

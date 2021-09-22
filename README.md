@@ -9,6 +9,36 @@ COM object with method of upload file to S3 compatible with .net 4.5
 Was needed to integrate Directum system with S3
 Directum will be calling COM method that in turn will call Amazon.S3 .NET SDK to put files into S3 storage
 
+COM interface method:
+
+public interface S3UploaderInterface
+    {
+        string SendFile(string p_filename,
+                        string p_accessKey,
+                        string p_secretKey,
+                        string p_serviceURL,
+                        string p_bucketName,
+                        string p_subDirectoryInBucket,
+                        string p_fileNameInS3);
+
+Example of VB program that calls method with registered COM object:
+Sub test1()
+
+    Dim S3Uploader As Object
+    Set S3Uploader = CreateObject("S3.Upload")
+
+    Call MsgBox(S3Uploader.SendFile("F:\scan.pdf", _
+        "...replace with access key...", _
+        "...replace with sectet key...", _
+        "https://s3.cloud.lmru.tech", _
+        "t-tmp-stor", _
+        "", _
+        "S3FileName33.zip"), 0, "A Message")
+
+End Sub
+
+You can use free S3 browser program to check the results.
+
 Installation instructions
 -------------------------
 Register example:
